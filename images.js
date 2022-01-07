@@ -5,7 +5,7 @@ let axios = require("axios");
 let ipfsArray = [];
 let promises = [];
 
-for (let i = 1; i < 10; i++) {
+for (let i = 1; i < ; i++) {
     let paddedHex = i.toString();
     
     promises.push(new Promise( (res, rej) => {
