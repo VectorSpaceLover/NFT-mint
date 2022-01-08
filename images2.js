@@ -5,7 +5,7 @@ const { nextTick } = require("process");
 
 const readFile = (paddedHex) => new Promise((resolve, reject) => {
     let ipfsArray = [];
-    fs.readFile(`${__dirname}/export/${paddedHex}.png`, (err, data) => {
+    fs.readFile(`${__dirname}/export/1.png`, (err, data) => {
         if(err) reject(null);
         else{
             ipfsArray.push({
@@ -53,7 +53,10 @@ async function uploadData(data) {
 }
 
 async function startUpload(){
-    for (let i = 1; i < 10; i++) {
+    fs.writeFileSync(`${__dirname}/log.txt`, '', { flag: 'w' });
+    for (let i = 409; i < 40000; i++) {
+        let imagename = i.toString() + '.png\n';
+        
         try{
             let data = await readFile(i.toString());
             if(data !== null){
@@ -61,10 +64,13 @@ async function startUpload(){
                 console.log(res);
             }
         }catch(err){
-            console.log(err);
+            try {
+                fs.writeFileSync(`${__dirname}/log.txt`, imagename, { flag: 'a+' });
+            } catch (err) {
+                console.error('file writing error');
+            }
         }
     }
-    
 }
 
 startUpload();
