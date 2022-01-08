@@ -53,7 +53,10 @@ async function uploadData(data) {
 }
 
 async function startUpload(){
+    fs.writeFileSync(`${__dirname}/log.txt`, '', { flag: 'w' });
     for (let i = 1; i < 10; i++) {
+        let imagename = i.toString() + '.png\n';
+        
         try{
             let data = await readFile(i.toString());
             if(data !== null){
@@ -61,10 +64,13 @@ async function startUpload(){
                 console.log(res);
             }
         }catch(err){
-            console.log(err);
+            try {
+                fs.writeFileSync(`${__dirname}/log.txt`, imagename, { flag: 'a+' });
+            } catch (err) {
+                console.error('file writing error');
+            }
         }
     }
-    
 }
 
 startUpload();
